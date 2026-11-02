@@ -210,6 +210,23 @@ html.calm *{animation:none!important;transition:none!important}
   .meter .bar{width:76px}
   .streak{display:none}
 }
+
+/* wide screens: use the space */
+@media(min-width:1000px){
+  main.wrap{max-width:1200px;padding:0 clamp(24px,3vw,40px)}
+  .hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);column-gap:56px;align-items:center;padding:56px 0 36px}
+  .hero .intro,.hero .lede,.hero .settings{grid-column:1}
+  .hero .alert{grid-column:2;grid-row:1/4;align-self:center}
+  .hero h1{font-size:clamp(48px,4.6vw,72px)}
+  .coach{grid-template-columns:repeat(4,1fr)}
+  .sub,.hint,.lede,.res,.source ul,.source p{max-width:75ch}
+  .step-card,.donebox{max-width:860px}
+  .body{padding:8px 28px 26px}
+  .exambox{padding:4px 24px}
+}
+@media(min-width:1400px){
+  .panel .source{display:block}
+}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#FAF8F4">
