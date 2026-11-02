@@ -1,4 +1,4 @@
-# Ed's Academy
+# Tafadzwa Academy
 
 Hard tech, the easy way. Python, n8n and cyber security in tiny steps, with games and a practice world (Mama Rudo's Kitchen and Msasa Homes). All names, companies and data in the lessons are made up.
 

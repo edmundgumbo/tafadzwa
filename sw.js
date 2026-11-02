@@ -1,5 +1,5 @@
 // Ed's Academy offline worker. Bump VERSION on every publish so phones get the new page.
-const VERSION = "academy-v1";
+const VERSION = "academy-v2";
 const SHELL = ["./", "index.html", "manifest.webmanifest", "icons/icon-192.png", "icons/icon-512.png"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(VERSION).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
