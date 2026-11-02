@@ -43,7 +43,7 @@ button{font:inherit;cursor:pointer}
 .wrap{max-width:760px;margin:0 auto;padding:0 20px}
 
 header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
-header.top .wrap{display:flex;align-items:center;gap:14px;height:60px}
+header.top .wrap{display:flex;align-items:center;gap:14px;height:64px;max-width:none;padding:0 clamp(16px,3vw,40px)}
 .mark{width:40px;height:auto;flex:none}.mark .mk-b{fill:var(--mk-b)}.mark .mk-tri,.mark .mk-a1{fill:var(--mk-a)}.mark .mk-a2{fill:var(--mk-a);fill-opacity:.55}
 .brand i{font-style:normal;color:var(--petrol)}
 .brand{font-family:var(--display);font-weight:800;font-size:17px;letter-spacing:.01em;text-transform:uppercase}
@@ -197,6 +197,19 @@ html.calm *{animation:none!important;transition:none!important}
 .exambox summary{font-family:var(--display);font-weight:700;font-size:18px;cursor:pointer;padding:12px 0}
 .exambox b{font-family:var(--display);font-weight:600;display:block;margin:14px 0 6px;color:var(--petrol);font-size:16px}
 
+
+.brand{white-space:nowrap;min-width:0}
+.meter{white-space:nowrap;flex:none}
+@media(max-width:520px){
+  header.top .wrap{gap:10px;height:58px}
+  .mark{width:30px}
+  .brand{font-size:14px}
+  .brand small{font-size:10.5px}
+  .brand small .tg{display:none}
+  .meter{font-size:11px}
+  .meter .bar{width:76px}
+  .streak{display:none}
+}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#FAF8F4">
@@ -208,7 +221,7 @@ html.calm *{animation:none!important;transition:none!important}
 <header class="top">
   <div class="wrap">
     <svg class="mark" viewBox="0 0 740 624" aria-hidden="true"><use href="#bsmark"/></svg>
-    <div class="brand">Tafadzwa <i>Academy</i><small>by Busy Signal IT · It answers.</small></div>
+    <div class="brand">Tafadzwa <i>Academy</i><small>by Busy Signal IT<span class="tg"> · It answers.</span></small></div>
     <div class="meter" aria-live="polite"><span id="meterTxt">0 steps</span><div class="bar"><i id="meterBar"></i></div><div class="streak" id="streak"></div></div>
   </div>
 </header>
