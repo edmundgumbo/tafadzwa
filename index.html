@@ -227,6 +227,19 @@ html.calm *{animation:none!important;transition:none!important}
 @media(min-width:1400px){
   .panel .source{display:block}
 }
+
+.stages{list-style:none;margin:0 0 10px;padding:0;display:grid;gap:10px}
+@media(min-width:1000px){.stages{grid-template-columns:repeat(3,1fr)}}
+.stage{display:flex;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.stage .sn{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--line);font-family:var(--display);font-weight:700;font-size:14px;color:var(--muted)}
+.stage div{flex:1;min-width:0}.stage b{font-family:var(--display);font-weight:700;display:block;font-size:16px;line-height:1.2}
+.stage div span{display:block;font-size:13px;color:var(--muted);line-height:1.35;margin-top:2px}
+.stage .sbar{display:block;height:5px;border-radius:3px;background:var(--line);margin-top:8px;overflow:hidden}.stage .sbar em{display:block;height:100%;background:var(--petrol)}
+.stage .sc{flex:none;font-family:var(--display);font-size:13px;color:var(--muted)}
+.stage.now{border-color:var(--petrol);box-shadow:0 0 0 2px var(--petrol-soft)}.stage.now .sn{border-color:var(--petrol);color:var(--petrol)}.stage.now .sc{color:var(--petrol);font-weight:700}
+.stage.done .sn{background:var(--petrol);border-color:var(--petrol);color:var(--card)}
+.mod.extra{opacity:.6}.mod.extra.open,.mod.extra:hover{opacity:1}
+.xtag{display:inline-block;margin-top:4px;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.02em;padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#FAF8F4">
@@ -259,6 +272,16 @@ html.calm *{animation:none!important;transition:none!important}
       <button class="btn" id="heroGo">Start</button>
     </div>
   </div>
+
+  <section aria-labelledby="pathH" id="pathSec">
+    <h2 id="pathH">My path</h2>
+    <p class="sub">One route through the best of the academy, in the right order. Just press the button in the orange box at the top, every day. Anything marked "Extra · later" can wait until the path is done.</p>
+    <p class="hint" id="pathTotal"></p>
+    <ol class="stages" id="stages"></ol>
+    <h3 class="rh">Your 3 portfolio projects</h3>
+    <p class="sub">Certificates get you seen. Projects get you hired. Each one appears on your path at the right moment. Peek now, build when the button sends you.</p>
+    <ol class="path" id="path-proj"></ol>
+  </section>
 
   <section aria-labelledby="revH">
     <h2 id="revH">Daily 5-minute review</h2>
@@ -686,6 +709,7 @@ html.calm *{animation:none!important;transition:none!important}
       <div class="track"><b>Tools: MIT Missing Semester</b><span class="tag">Active</span></div>
       <div class="track"><b>n8n labs</b><span class="tag">Active</span></div>
       <div class="track"><b>Python from zero + MIT 6.100L season</b><span class="tag">Active</span></div>
+      <div class="track"><b>My path + 3 portfolio projects</b><span class="tag">Active</span></div>
       <div class="track"><span>Launch on GitHub Pages, offline mode and the laptop pack</span><span class="tag later">Next</span></div>
     </div>
   </section>
@@ -2581,6 +2605,83 @@ const MITSEC = [
 }
 ];
 
+const PROJ = [
+{
+  t:"Project 1: Kitchen Orders Automation", s:"n8n: form, locked webhook, alarm, case study",
+  steps:[
+    {h:"Why this project", d:"This is the proof that you can automate a real business. You build it for Mama Rudo's Kitchen (made up), then show it to clients and employers. Use only your own free n8n and Google accounts."},
+    {h:"Build the order form", d:"Duplicate your Lead Capture lab and rename it Kitchen Orders. Change the form to: Name, Phone, Dish (dropdown: Sadza, Rice, Kapenta), Quantity (number). Save each order to a Google Sheet called Kitchen Orders.", see:"A test order lands in the sheet as a new row."},
+    {h:"Add a rule", d:"After the form, add an IF node: Quantity is larger than 10. True: email yourself 'Big order, call the chef'. False: do nothing extra.",
+      q:{q:"Which node makes the decision?", opts:[["The IF node",true,"Correct. Same idea as if in Python."],["The Google Sheets node",false,"That saves data. It does not decide."],["The form",false,"The form only collects."]]}},
+    {h:"Lock the door", d:"Add a second way in: a Webhook node with Header Auth, like the Lock the door lab, that also saves orders. Prove it: knock without the key (rejected), then with the key (accepted). Screenshot both."},
+    {h:"Add the alarm", d:"Set this workflow's Error Workflow to your Error Alarm lab, so you get an email if it ever breaks.", see:"Settings shows Error Workflow: Error Alarm."},
+    {h:"Export and commit", d:"Download the workflow (menu, Download). DANGER: open the file and check no keys or passwords are inside. Then put it in a new GitHub repo called kitchen-orders-automation, with your screenshots.",
+      q:{q:"You open the exported file and see an API key. What now?", opts:[["Remove it, rotate the key, and only then commit",true,"Correct. A pushed key is public forever."],["Commit it, the repo can be private later",false,"Public history keeps it, and bots scan GitHub constantly."],["Rename the file",false,"The key is still inside."]]}},
+    {h:"Write the case study", d:"Ask Claude to help you write a one page README: the problem, what you built, a diagram, how it is secured, and what you would add next. You write it, Claude edits. Link it from your portfolio.", see:"A public repo with workflow, screenshots and a clear README."}
+  ]
+},
+{
+  t:"Project 2: Meter Bill Calculator", s:"Python: read data, catch errors, test, chart",
+  steps:[
+    {h:"Why this project", d:"This proves you can write real Python, not just follow tutorials. It is a small tool for Mita, the made up meter billing system at Msasa Homes. All names and numbers are invented."},
+    {h:"Make the data", d:"In VS Code, inside academy-practice, create readings.csv with these lines. Then create bills.py next to it.", code:"unit,previous,current\nA1,1200,1260\nA2,980,1010\nB1,1500,abc\nB2,700,690"},
+    {h:"Read the file", d:"Use Python's csv module to read each row into a dictionary (MIT lecture 14). Print each unit and its usage: current minus previous.", code:"import csv\nwith open(\"readings.csv\") as f:\n    for row in csv.DictReader(f):\n        print(row[\"unit\"], row)"},
+    {h:"Catch the bad rows", d:"B1 has 'abc' and B2 goes backwards. Wrap the maths in try/except ValueError, and flag any negative usage. Bad rows go into a separate list called problems (MIT lecture 13).",
+      q:{q:"Why not just let the program crash on 'abc'?", opts:[["One bad reading should not stop every tenant's bill",true,"Correct. Handle it, report it, keep going."],["Crashing is faster",false,"Fast and wrong is still wrong."],["Python cannot catch errors",false,"try/except does exactly this."]]}},
+    {h:"Bill it in a function", d:"Write bill(usage, rate) that returns the amount. Use rate 2.5 per unit. Add three assert tests, including usage 0 (MIT lecture 12).", code:"def bill(usage, rate=2.5):\n    return round(usage * rate, 2)\n\nassert bill(0) == 0\nassert bill(60) == 150.0\nassert bill(30) == 75.0"},
+    {h:"Chart it", d:"Install matplotlib and draw a bar chart of usage per unit, with a title and labelled axes (MIT lecture 25). Save it as usage.png."},
+    {h:"Ship it", d:"Create a GitHub repo called meter-bill-calculator with bills.py, readings.csv, usage.png and a README: what it does, how to run it, and what it does with bad data. Ask Claude to review your code, not rewrite it.", see:"A public repo someone else can download and run."}
+  ]
+},
+{
+  t:"Project 3: Zuri AI Security Case Study", s:"Your edge: attack, fix and write up an AI bot",
+  steps:[
+    {h:"Why this project", d:"This is what makes you stand out. Most beginners have certificates. Very few can show an AI system they attacked and fixed. Build a practice bot called Zuri for the made up Msasa Homes, on your own free accounts only."},
+    {h:"Build the practice bot", d:"In n8n: a form or chat trigger, a Basic LLM Chain that answers questions about three made up flats, and a checker chain like the AI triage lab. Give it no real data, only an invented list of flats and prices."},
+    {h:"Threat model it", d:"Write the policy, threat model and mechanism (MIT 6.858 lecture 1 and Cyber module 1): what Zuri may share, who talks to it, and the worst thing it could leak.",
+      q:{q:"Which is a mechanism, not a policy?", opts:[["Zuri's database account can only read the flats table",true,"Correct. That is the lock. The policy is the goal it enforces."],["Zuri must never share tenant details",false,"That is the goal, so it is policy."],["Attackers can message Zuri",false,"That is the threat model."]]}},
+    {h:"Red team it", d:"Send Zuri the five attack messages from Cyber module 4. Log every reply in a table: attack, what Zuri did, pass or fail."},
+    {h:"Fix it", d:"For every fail, fix it the right way: remove data Zuri does not need, let the checker block, and require human approval for anything risky. Run all five attacks again and log the new results.", see:"Your table shows before and after."},
+    {h:"Write the case study", d:"With Claude as editor: one page with the threat model, the attack table before and after, your fixes, and what you learned. Map each fix to its Security+ term (least privilege, defense in depth). Publish it on GitHub and your portfolio.",
+      q:{q:"What makes this case study convincing to an employer?", opts:[["Real before and after evidence, explained in plain words",true,"Correct. Evidence beats claims."],["Long words and lots of jargon",false,"Clarity wins. Jargon hides understanding."],["Saying the bot is unhackable",false,"Nothing is. Honest limits build trust."]]}},
+    {h:"Tell people", d:"Post a short LinkedIn write-up linking the case study. You built in public, exactly as the Cyber sources advise. Then tell Claude: you just finished the whole path."}
+  ]
+}
+];
+
+const PATH_STAGES = (()=>{
+  const r=(tr,a,b)=>Array.from({length:b-a+1},(_,k)=>[tr,a+k]);
+  const S=[]; [["secplus",6],["secplus2",9],["secplus3",6],["secplus4",8],["secplus5",6]].forEach(([t,n])=>S.push(...r(t,0,n-1)));
+  const M=r("mitpy",0,13); const mix=[]; let s=0;
+  M.forEach((m,j)=>{const until=Math.round((j+1)*S.length/(M.length+1)); while(s<until) mix.push(S[s++]); mix.push(m)});
+  mix.push(["proj",1]); while(s<S.length) mix.push(S[s++]); mix.push(["mock",0]);
+  return [
+    {name:"Foundation", sub:"Story mode: Mama Rudo's Kitchen", items:r("story",0,11)},
+    {name:"Python basics", sub:"Ten tiny lessons", items:r("python",0,9)},
+    {name:"Developer tools", sub:"The shell and Git, every job needs them", items:[["tools",0],["tools",1],["tools",4],["tools",5]]},
+    {name:"Automation that pays", sub:"Three n8n labs, then Project 1", items:[["n8n",0],["n8n",2],["n8n",4],["proj",0]]},
+    {name:"Computer science + Security+", sub:"MIT 6.100L mixed with Security+, Project 2, then the mock exam", items:mix},
+    {name:"Your edge: AI security", sub:"Cyber modules, then Project 3", items:[...r("cyber",0,5),["cyber",7],["cyber",8],["proj",2]]}
+  ];
+})();
+const PATH_FLAT = PATH_STAGES.flatMap((g,gi)=>g.items.map(it=>({it,gi})));
+const PATH_SET = new Set(PATH_FLAT.map(x=>x.it.join("|")));
+function isExtra(tr,i){return tr!=="proj"&&!PATH_SET.has(tr+"|"+i)}
+function pathDone(it){return it[0]==="mock"?(state.mock&&(state.mock.best||0)>=800):isDone(it[0],it[1])}
+const PANEL_OF={story2:"story",mitpy:"python",mitsec:"cyber",secplus2:"secplus",secplus3:"secplus",secplus4:"secplus",secplus5:"secplus"};
+function itemLabel(tr,i){
+  if(tr==="mock") return "Security+ mock exam: score 800+";
+  const m=TRACKS[tr].items[i], pre=tr.startsWith("secplus")?`Security+ Domain ${tr==="secplus"?1:tr.slice(7)}, `:tr==="mitpy"?"MIT 6.100L, ":tr==="proj"?"":tr==="cyber"?"Cyber ":tr==="tools"?"Tools, ":tr==="n8n"?"n8n ":tr==="python"?"Python ":"";
+  return tr==="proj"?m.t:`${pre}${TRACKS[tr].word} ${i+1}: ${m.t}`;
+}
+function renderPath(){
+  const el=document.getElementById("stages"); if(!el) return;
+  const next=PATH_FLAT.findIndex(x=>!pathDone(x.it)), nowStage=next<0?-1:PATH_FLAT[next].gi;
+  let doneAll=0;
+  el.innerHTML=PATH_STAGES.map((g,gi)=>{const d=g.items.filter(pathDone).length; doneAll+=d; const cls=d===g.items.length?"done":gi===nowStage?"now":"";
+    return `<li class="stage ${cls}"><span class="sn">${d===g.items.length?"✓":gi+1}</span><div><b>${esc(g.name)}</b><span>${esc(g.sub)}</span><i class="sbar"><em style="width:${Math.round(d/g.items.length*100)}%"></em></i></div><span class="sc">${gi===nowStage?"Now · ":""}${d} / ${g.items.length}</span></li>`}).join("");
+  const t=document.getElementById("pathTotal"); if(t) t.textContent=`${doneAll} of ${PATH_FLAT.length} path steps done`;
+}
 const TRACKS = {
   story:{items:STORY, kind:"story", word:"Mission"},
   story2:{items:STORY2, kind:"story", word:"Mission"},
@@ -2594,7 +2695,8 @@ const TRACKS = {
   n8n:{items:LABS, kind:"step", word:"Lab"},
   python:{items:PY, kind:"step", word:"Lesson"},
   mitpy:{items:MITPY, kind:"story", word:"Mission"},
-  mitsec:{items:MITSEC, kind:"story", word:"Mission"}
+  mitsec:{items:MITSEC, kind:"story", word:"Mission"},
+  proj:{items:PROJ, kind:"step", word:"Project"}
 };
 const KEY="edAcademy.v2";
 let state={};
@@ -2602,7 +2704,7 @@ try{state=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){state={}}
 if(!state.cyber){state.cyber={}; try{const old=JSON.parse(localStorage.getItem("edAcademy.cyber.v1")); if(old) state.cyber=old;}catch(e){}}
 function normState(){
   if(!state.cyber) state.cyber={};
-  ["story","story2","tools","secplus","secplus2","secplus3","secplus4","secplus5","n8n","python","mitpy","mitsec"].forEach(k=>state[k]=state[k]||{});
+  ["story","story2","tools","secplus","secplus2","secplus3","secplus4","secplus5","n8n","python","mitpy","mitsec","proj"].forEach(k=>state[k]=state[k]||{});
   state.days=state.days||[]; state.prefs=state.prefs||{}; state.rev=state.rev||{}; state.reviewDays=state.reviewDays||[]; state.mock=state.mock||{};
 }
 normState();
@@ -2612,7 +2714,7 @@ function st(tr,i){
   const b=state[tr];
   if(!b[i]) b[i]= tr==="cyber"?{read:false,drill:false,task:false}: isStory(tr)?{card:0,done:false,solved:{}}:{step:0,done:false,passed:{}};
   if(isStory(tr)&&!b[i].solved) b[i].solved={};
-  if((tr==="n8n"||tr==="python")&&!b[i].passed) b[i].passed={};
+  if((tr==="n8n"||tr==="python"||tr==="proj")&&!b[i].passed) b[i].passed={};
   return b[i];
 }
 function isStory(tr){return TRACKS[tr].kind==="story"}
@@ -2641,6 +2743,7 @@ function renderTrack(tr){
     li.innerHTML=`<span class="num">${i+1}</span>
       <button class="head" aria-expanded="false"><span><span class="t">${esc(m.t)}</span><span class="s">${esc(m.s)}</span></span>${right}</button>
       <div class="body" id="${tr}-b${i}"></div>`;
+    if(isExtra(tr,i)){li.classList.add("extra"); li.querySelector(".head .t").insertAdjacentHTML("afterend",'<span class="xtag">Extra · later</span>')}
     path.appendChild(li);
     fill(tr,i);
   });
@@ -2783,23 +2886,17 @@ function meter(){
 let current="story", heroTarget=0, heroTr="story";
 function hero(){
   const who=document.getElementById("heroWho"), txt=document.getElementById("heroText"), go=document.getElementById("heroGo");
-  if(current==="cyber"){
-    heroTr="cyber";
-    heroTarget=MODS.findIndex((_,i)=>!st("cyber",i).drill);
-    if(heroTarget>=0){who.textContent=MODS[heroTarget].drill.who; txt.textContent=MODS[heroTarget].drill.q; go.textContent="Take this drill"; return;}
-  }
-  let tr=current==="cyber"?"mitsec":current;
-  if(tr==="story"&&STORY.every((_,i)=>st("story",i).done)) tr="story2";
-  if(tr==="python"&&PY.every((_,i)=>st("python",i).done)) tr="mitpy";
-  if(tr==="secplus") tr=SECTR.find(t=>!TRACKS[t].items.every((_,i)=>st(t,i).done))||"secplus5";
-  heroTr=tr;
-  const items=TRACKS[tr].items, word=TRACKS[tr].word, pre=tr.startsWith("secplus")?`Domain ${tr==="secplus"?1:tr.slice(7)}, `:tr==="story2"?"Season 2, ":tr==="mitpy"?"MIT 6.100L, ":tr==="mitsec"?"MIT 6.858, ":"";
-  heroTarget=items.findIndex((_,i)=>!st(tr,i).done);
-  if(heroTarget<0){who.textContent="Track complete";txt.textContent="Every step here is done. Tell Claude the next thing you want to learn.";go.textContent="Review the track";heroTarget=0;return}
-  const s=st(tr,heroTarget), m=items[heroTarget];
-  who.textContent=`${pre}${word} ${heroTarget+1}: ${m.t}`;
+  renderPath();
+  const k=PATH_FLAT.findIndex(x=>!pathDone(x.it));
+  if(k<0){heroTr="story";heroTarget=0;who.textContent="Path complete";txt.textContent="You finished the whole path, all three projects included. Tell Claude: time for the next level.";go.textContent="Review";return}
+  const [tr,i]=PATH_FLAT[k].it, stage=PATH_STAGES[PATH_FLAT[k].gi];
+  heroTr=tr; heroTarget=i;
+  who.textContent=`My path, stage ${PATH_FLAT[k].gi+1} (${stage.name}) · ${itemLabel(tr,i)}`;
+  if(tr==="mock"){const b=(state.mock&&state.mock.best)||0; txt.textContent=b?`Best so far: ${b} of 900. Keep going until you score 800 or more.`:"30 questions, 30 minutes, like the real thing. Aim for 800 or more."; go.textContent="Open the mock exam"; return}
+  if(tr==="cyber"){const s=st("cyber",i); txt.textContent=MODS[i].s+`. Read the lesson, pass the drill, do the task (${[s.read,s.drill,s.task].filter(Boolean).length} of 3 done).`; go.textContent="Open module"; return}
+  const s=st(tr,i), m=TRACKS[tr].items[i];
   if(isStory(tr)){ txt.textContent=m.s+". "+(s.card>0?`You are on step ${s.card+1} of ${m.cards.length}.`:"About five minutes. One small step at a time."); go.textContent=s.card>0?"Continue":"Start mission"; }
-  else { txt.textContent=`Step ${s.step+1}: ${m.steps[s.step].h}`; go.textContent=s.step>0?"Continue":"Start"; }
+  else { txt.textContent=`${m.s?m.s+". ":""}Step ${s.step+1}: ${m.steps[s.step].h}`; go.textContent=s.step>0?"Continue":"Start"; }
 }
 function show(tr){
   if(/^secplus\d$/.test(tr)) tr="secplus";
@@ -2908,7 +3005,10 @@ document.addEventListener("click",e=>{
 });
 document.addEventListener("change",e=>{const t=e.target.closest("[data-task]"); if(t){const i=+t.dataset.task; st("cyber",i).task=t.checked; touch(); save(); refreshHead("cyber",i)}});
 document.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.id&&e.target.id.startsWith("fillin")){const b=document.querySelector(`[data-fillcheck="${e.target.id.slice(6)}"]`); if(b) b.click()}});
-document.getElementById("heroGo").addEventListener("click",()=>{const li=document.getElementById(`${heroTr}-m${heroTarget}`); if(!li) return; if(!li.classList.contains("open")) toggle(heroTr,heroTarget,true); else goTo(heroTr,heroTarget)});
+document.getElementById("heroGo").addEventListener("click",()=>{
+  if(heroTr==="mock"){history.replaceState(null,"","#secplus"); show("secplus"); const q=document.getElementById("quiz-mock"); if(q&&q.scrollIntoView) q.scrollIntoView({behavior:"smooth",block:"start"}); return}
+  if(heroTr!=="proj"){const pn=PANEL_OF[heroTr]||heroTr; if(location.hash!=="#"+pn) history.replaceState(null,"","#"+pn); show(pn)}
+  const li=document.getElementById(`${heroTr}-m${heroTarget}`); if(!li) return; if(!li.classList.contains("open")) toggle(heroTr,heroTarget,true); else goTo(heroTr,heroTarget)});
 window.addEventListener("hashchange",()=>show(location.hash.slice(1)));
 
 
@@ -3024,7 +3124,7 @@ function qFinish(qid){
       ${wrong.length?`<h3>Learn from these</h3><ol class="res">${wrong.map(r=>{const c=cardById(r.id);return `<li><b>${esc(c.q)}</b><br>${r.skipped?"Not answered. ":""}${esc(explain(c))}</li>`}).join("")}</ol>`:""}`;
     wrong.forEach(r=>{state.rev[r.id]={box:0,last:dayKey()}}); save();
   }
-  updateReviewUI();
+  updateReviewUI(); hero();
 }
 document.addEventListener("click",e=>{
   const T=e.target;
