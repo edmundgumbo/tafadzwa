@@ -1,6 +1,6 @@
 // Ed's Academy offline worker. Bump VERSION on every publish so phones get the new page.
-const VERSION = "academy-v4";
-const SHELL = ["./", "index.html", "manifest.webmanifest", "icons/icon-192.png", "icons/icon-512.png"];
+const VERSION = "academy-v5";
+const SHELL = ["./", "index.html", "free/", "manifest.webmanifest", "icons/icon-192.png", "icons/icon-512.png"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(VERSION).then(c => c.addAll(SHELL.map(u => new Request(u, {cache: "reload"})))).then(() => self.skipWaiting()));
 });
@@ -15,8 +15,9 @@ self.addEventListener("fetch", e => {
   if (url.origin !== location.origin && !fonts) return;
   if (req.mode === "navigate") {
     // Page: try the network first so updates arrive, fall back to the saved copy offline.
-    e.respondWith(fetch(req, {cache: "no-cache"}).then(r => { const c = r.clone(); caches.open(VERSION).then(x => x.put("index.html", c)); return r; })
-      .catch(() => caches.match("index.html")));
+    // Each page is saved under its own address, so the free downloads page never replaces the course page.
+    e.respondWith(fetch(req, {cache: "no-cache"}).then(r => { const c = r.clone(); caches.open(VERSION).then(x => x.put(req, c)); return r; })
+      .catch(() => caches.match(req).then(hit => hit || caches.match("index.html"))));
     return;
   }
   // Everything else: saved copy first, refresh it in the background.

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Free downloads · Tafadzwa Academy</title>
+<meta name="description" content="Free tools from the Tafadzwa Academy YouTube show. Copy them, use them, keep them.">
+<link rel="icon" type="image/png" href="../icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#FAF8F4;--ink:#15161B;--muted:#565B6A;--line:#E6E0D6;--accent:#C9361F;--soft:#FCE9E4;--signal:#E8692A;--ok:#15803D;--card:#FFFFFF;
+  --display:"Montserrat","Helvetica Neue",Arial,sans-serif;--text:"DM Sans","Helvetica Neue",Arial,sans-serif;color-scheme:light}
+@media (prefers-color-scheme: dark){:root{--paper:#0B0C11;--ink:#F4F5F8;--muted:#A2A7B6;--line:#252836;--accent:#FF6A1A;--soft:#2A1A12;--signal:#FFB300;--ok:#4ADE80;--card:#151722;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 18px/1.6 var(--text)}
+a{color:var(--accent)}
+.wrap{width:100%;max-width:1100px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+header{border-bottom:1px solid var(--line)}
+header .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;height:64px}
+.brand{font:800 17px/1 var(--display);text-transform:uppercase;text-decoration:none;color:var(--ink)}
+.brand i{font-style:normal;color:var(--accent)}
+.back{font:600 14px/1 var(--display);text-decoration:none}
+h1{font:800 clamp(34px,6vw,58px)/1.05 var(--display);margin:40px 0 10px;letter-spacing:-.5px}
+h2{font:700 28px/1.15 var(--display);margin:0 0 6px}
+.lede{color:var(--muted);max-width:60ch;margin:0 0 32px}
+.ep{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:clamp(18px,3vw,30px);margin-bottom:22px}
+.tag{display:inline-block;font:600 12px/1 var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);background:var(--soft);padding:6px 10px;border-radius:999px;margin-bottom:12px}
+.q{border-top:1px solid var(--line);padding:16px 0;display:grid;gap:10px}
+.q p{margin:0;font-weight:500}
+.ans{display:flex;gap:8px;flex-wrap:wrap}
+.ans button{font:600 14px/1 var(--display);padding:10px 16px;border-radius:999px;border:1.5px solid var(--line);background:transparent;color:var(--ink);cursor:pointer}
+.ans button[aria-pressed="true"]{border-color:var(--accent);background:var(--soft);color:var(--accent)}
+.fix{display:none;background:var(--soft);border-radius:8px;padding:10px 14px;font-size:16px}
+.fix.show{display:block}
+.score{border:2px solid var(--accent);border-radius:12px;padding:18px;margin-top:18px}
+.score b{font:800 26px/1.2 var(--display);display:block;margin-bottom:6px}
+.score p{margin:0;color:var(--muted)}
+.btn{display:inline-block;margin-top:14px;font:700 15px/1 var(--display);padding:13px 20px;border-radius:999px;background:var(--accent);color:var(--paper);text-decoration:none}
+.btn.ghost{background:transparent;color:var(--accent);border:1.5px solid var(--accent);margin-left:8px}
+.soon{color:var(--muted)}
+.soon li{margin-bottom:6px}
+footer{padding:40px 0 60px;color:var(--muted);font-size:15px}
+:focus-visible{outline:3px solid var(--signal);outline-offset:2px}
+@media print{header,.btn,.ans,footer{display:none}.fix{display:block}body{background:#fff;color:#000}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a class="brand" href="../">Tafadzwa <i>Academy</i></a><a class="back" href="../">Open the course →</a></div></header>
+<main class="wrap">
+  <h1>Free downloads</h1>
+  <p class="lede">Every episode of the Tafadzwa Academy show comes with one free tool. Use it on your own business. No sign up, no catch.</p>
+
+  <article class="ep" id="ep1">
+    <span class="tag">Episode 1 · Mama Rudo is losing money on WhatsApp</span>
+    <h2>Where is my business leaking?</h2>
+    <p class="lede" style="margin-bottom:10px">Five questions. Answer honestly for your own business. Each "leak" shows you the fix and the episode where we build it.</p>
+    <div id="qs"></div>
+    <div class="score" id="score" aria-live="polite"><b id="s-title">Answer the 5 questions</b><p id="s-text">Your result shows here.</p></div>
+    <a class="btn" id="wa" href="https://wa.me/27681616498?text=Hi%20Edmund%2C%20I%20did%20the%20Episode%201%20checklist." target="_blank" rel="noopener">Want it fixed for you? WhatsApp Edmund</a><a class="btn ghost" href="https://edmundgumbo.github.io/" target="_blank" rel="noopener">See his work</a>
+  </article>
+
+  <article class="ep">
+    <span class="tag">Coming every Thursday at 14:14</span>
+    <h2>Next free tools</h2>
+    <ul class="soon">
+      <li>Episode 2: copy and paste "Chat on WhatsApp" button</li>
+      <li>Episode 3: 10 ready WhatsApp reply templates</li>
+      <li>Episode 4: the order sheet template</li>
+      <li>Episode 5: the n8n flow file</li>
+    </ul>
+  </article>
+</main>
+<footer><div class="wrap">Tafadzwa Academy by Edmund Gumbo, Busy Signal IT. Mama Rudo and her kitchen are made up for the show. <a href="https://edmundgumbo.github.io/" target="_blank" rel="noopener">edmundgumbo.github.io</a></div></footer>
+<script>
+(function(){
+  var Q = [
+    ["Do you miss messages or calls when you are busy?", "Fix: a WhatsApp button and ready replies so people get an answer straight away. Episodes 2 and 3."],
+    ["Do customers ask the same questions again and again (prices, hours, where you are)?", "Fix: WhatsApp Business quick replies and a greeting message. Episode 3."],
+    ["Do orders or bookings live on paper, in your head or in scattered chats?", "Fix: a simple order form that fills one sheet. Episode 4."],
+    ["When someone messages you at night, do they wait until morning for an answer?", "Fix: a small robot helper that replies and saves the order. Episode 5."],
+    ["Is it hard for a new customer to find you online and message you in one tap?", "Fix: a one page website with WhatsApp, call and quote buttons. Episode 2."]
+  ];
+  var ans = {}, qs = document.getElementById("qs");
+  Q.forEach(function (q, i) {
+    var d = document.createElement("div"); d.className = "q";
+    d.innerHTML = '<p>' + (i + 1) + '. ' + q[0] + '</p><div class="ans" role="group" aria-label="Question ' + (i + 1) + '"><button type="button" id="q' + i + 'y" data-i="' + i + '" data-v="1" aria-pressed="false">Yes</button><button type="button" id="q' + i + 'n" data-i="' + i + '" data-v="0" aria-pressed="false">No</button></div><div class="fix" id="fix' + i + '">' + q[1] + '</div>';
+    qs.appendChild(d);
+  });
+  qs.addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-i]"); if (!b) return;
+    var i = b.dataset.i; ans[i] = +b.dataset.v;
+    b.parentNode.querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+    document.getElementById("fix" + i).classList.toggle("show", ans[i] === 1);
+    var n = Object.keys(ans).length, leaks = 0; for (var k in ans) leaks += ans[k];
+    var t = document.getElementById("s-title"), p = document.getElementById("s-text");
+    if (n < Q.length) { t.textContent = n + " of 5 answered"; p.textContent = "Keep going."; return; }
+    if (leaks === 0) { t.textContent = "No leaks. Well done."; p.textContent = "Your business answers its customers. Watch the show for ideas to grow."; }
+    else if (leaks <= 2) { t.textContent = leaks + (leaks === 1 ? " leak found" : " leaks found"); p.textContent = "Small leaks, quick fixes. Start with the first fix above this week."; }
+    else { t.textContent = leaks + " leaks found"; p.textContent = "Your business is losing customers every week. The fixes above are free; start with the first one today."; }
+    document.getElementById("wa").href = "https://wa.me/27681616498?text=" + encodeURIComponent("Hi Edmund, I did the Episode 1 checklist and found " + leaks + " leak" + (leaks === 1 ? "" : "s") + ".");
+  });
+})();
+</script>
+</body>
+</html>
